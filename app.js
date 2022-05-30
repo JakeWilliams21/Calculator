@@ -3,6 +3,7 @@ const operators = document.querySelectorAll('.operator')
 const equals = document.querySelector('.equals')
 const clear = document.querySelector('.clear')
 let prevValue = 0
+let didCompute = false;
 selectedOperator = ''
 console.log(output);
 
@@ -39,20 +40,31 @@ numbers.forEach(number => {
 
 operators.forEach(operator => {
     operator.addEventListener('click', e => {
-        prevValue = output.textContent
-        selectedOperator = e.target.id
-        output.textContent = 0;
+        if (prevValue === 0 || didCompute) {
+            prevValue = output.textContent
+            selectedOperator = e.target.id
+            output.textContent = 0;
+            didCompute = false;
+        } else {
+            compute();
+            selectedOperator = e.target.id;
+            output.textContent = 0;
+        }
+        
     })
 })
 
-equals.addEventListener('click', () => {
+compute = () => {
     let solution = 0
-    intFirst = parseInt(prevValue);
-    intSecond = parseInt(output.textContent);
+    intFirst = parseFloat(prevValue);
+    intSecond = parseFloat(output.textContent);
     solution = operate(selectedOperator, intFirst, intSecond)
+    prevValue = solution
     output.textContent = solution
+    didCompute = true
+}
 
-})
+equals.addEventListener('click', () => compute())
 
 clear.addEventListener('click', () => {
     output.textContent = 0
