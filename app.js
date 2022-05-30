@@ -1,5 +1,9 @@
 const output = document.querySelector('.output')
-const save = document.querySelectorAll('.outer')
+const operators = document.querySelectorAll('.operator')
+const equals = document.querySelector('.equals')
+const clear = document.querySelector('.clear')
+let prevValue = 0
+selectedOperator = ''
 console.log(output);
 
 const add = (first, second) => first + second;
@@ -31,4 +35,27 @@ numbers.forEach(number => {
             output.textContent += e.target.id
         }
     })
+})
+
+operators.forEach(operator => {
+    operator.addEventListener('click', e => {
+        prevValue = output.textContent
+        selectedOperator = e.target.id
+        output.textContent = 0;
+    })
+})
+
+equals.addEventListener('click', () => {
+    let solution = 0
+    intFirst = parseInt(prevValue);
+    intSecond = parseInt(output.textContent);
+    solution = operate(selectedOperator, intFirst, intSecond)
+    output.textContent = solution
+
+})
+
+clear.addEventListener('click', () => {
+    output.textContent = 0
+    prevValue = 0
+    console.log(prevValue);
 })
