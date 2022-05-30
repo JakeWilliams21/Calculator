@@ -2,6 +2,7 @@ const output = document.querySelector('.output')
 const operators = document.querySelectorAll('.operator')
 const equals = document.querySelector('.equals')
 const clear = document.querySelector('.clear')
+const decimal = document.querySelector('.decimal')
 let prevValue = 0
 let didCompute = false;
 selectedOperator = ''
@@ -11,6 +12,7 @@ const add = (first, second) => first + second;
 const subtract = (first, second) => first - second;
 const multiply = (first, second) => first * second
 const divide = (first, second) => first / second;
+
 
 const operate = (operator, first, second) => {
     switch (operator) {
@@ -29,14 +31,22 @@ const operate = (operator, first, second) => {
 
 const numbers = document.querySelectorAll('.number')
 numbers.forEach(number => {
-    number.addEventListener('click', (e) => {
+    number.addEventListener('click', handleInput = (e) => {
         if( output.innerHTML === '0') {
             output.textContent = e.target.id
         } else {
             output.textContent += e.target.id
         }
+
+        if (output.textContent.includes('.')) {
+            decimal.removeEventListener('click', handleInput)
+        }
     })
 })
+
+if (output.textContent.includes('.')) {
+    decimal.removeEventListener('click', input)
+}
 
 operators.forEach(operator => {
     operator.addEventListener('click', e => {
